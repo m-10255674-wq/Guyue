@@ -13,7 +13,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("sender")
 
 # ====================== Flask 保活 ======================
-app = Flask(__name__)
+app = Flask(name)
 
 @app.route('/')
 def home():
