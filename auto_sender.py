@@ -94,6 +94,6 @@ async def main_telethon():
 def start_telethon():
     asyncio.run(main_telethon())
 
-if name == "__main__":
+if __name__ == "__main__":
     threading.Thread(target=run_flask, daemon=True).start()
     start_telethon()
