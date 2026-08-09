@@ -6,9 +6,9 @@ from telethon import TelegramClient, events
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from flask import Flask
 import threading
-
+import logging
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(name)
+logger = logging.getLogger("sender")  # 直接给一个固定名字
 
 app = Flask(name)
 
