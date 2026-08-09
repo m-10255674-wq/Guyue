@@ -1,6 +1,5 @@
 async def send_ad_photos():
         try:
-            # 一次性发送所有图片作为一个相册，第一张图带完整文案
             await client.send_file(entity, photo_list, caption=AD_CAPTION, parse_mode='markdown')
             logger.info(f"广告相册已发送给 {chat_str}")
         except Exception as e:
