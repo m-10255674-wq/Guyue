@@ -10,7 +10,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("sender")  # 直接给一个固定名字
 
-app = Flask(name)
+app = Flask(__name__)
 
 @app.route('/')
 def home():
