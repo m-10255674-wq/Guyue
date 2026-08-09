@@ -1,4 +1,5 @@
 import os
+import sys
 import asyncio
 import pytz
 import logging
@@ -12,7 +13,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("sender")
 
 # ====================== Flask 保活 ======================
-app = Flask(__name__)
+app = Flask(name)
 
 @app.route('/')
 def home():
@@ -27,8 +28,11 @@ API_ID = int(os.environ.get("API_ID", "0"))
 API_HASH = os.environ.get("API_HASH", "")
 ADMIN_ID = int(os.environ.get("ADMIN_ID", "0"))
 
+print(f"Loaded env: API_ID={API_ID}, API_HASH={'***' if API_HASH else 'MISSING'}, ADMIN_ID={ADMIN_ID}", flush=True)
+
 if not API_ID or not API_HASH or not ADMIN_ID:
-    raise ValueError("请在环境变量中设置 API_ID, API_HASH, ADMIN_ID")
+    print("ERROR: Missing required environment variables. Exiting.", flush=True)
+    sys.exit(1)
 
 TZ = pytz.timezone("Asia/Kuala_Lumpur")
 client = TelegramClient("my_session", API_ID, API_HASH)
@@ -143,10 +147,3 @@ async def set_ad_photo(event):
     if not photo_list:
         await event.reply("❌ 至少需要一张图片")
         return
-
-    async def send_ad_photos():
-        try:
-            await client.send_file(entity, photo_list, caption=AD_CAPTION, parse_mode='markdown')
-            logger.info(f"广告相册已发送给 {chat_str}")
-        except Exception as e:
-            logger.error(f"发送广告相册失败: {e}")
